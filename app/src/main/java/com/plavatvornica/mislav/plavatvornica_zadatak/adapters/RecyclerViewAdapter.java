@@ -35,21 +35,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //this.context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_row, parent, false);
         return new ViewHolder(view);
-        /*LayoutInflater layoutInflater = LayoutInflater.from(context);
-
-        View view = layoutInflater.inflate(R.layout.layout_row, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-
-        return viewHolder;*/
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, int position) {
         Article article = articleList.get(position);
-        if(article != null){
+        if (article != null) {
             holder.bind(position, listener);
             TextView textView = holder.textTitle;
             textView.setText(article.getTitle());
@@ -60,9 +53,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Glide.with(context).load(db.getArticle(position + 1).getImageByte()).asBitmap().placeholder(R.mipmap.ic_launcher).fitCenter().error(R.mipmap.ic_launcher).into(holder.imageView);
             }
         }
-
-        //ImageView imageView = holder.imageView:
-        //imageView.setim
     }
 
     @Override

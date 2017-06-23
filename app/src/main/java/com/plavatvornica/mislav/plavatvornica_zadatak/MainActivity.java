@@ -1,11 +1,9 @@
 package com.plavatvornica.mislav.plavatvornica_zadatak;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,9 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements retrofit2.Callback<ResponseBody>, RecyclerViewAdapter.OnItemClickListener {
 
     private ArrayList<Article> articleList;
-    //private ArrayAdapter adapter;
     private RecyclerViewAdapter adapter_proba;
-    //private ListView listView;
     private RecyclerView recyclerView;
     private static final String BASE_URL = "https://newsapi.org/";
     DatabaseHandler db;
@@ -48,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //listView = (ListView) findViewById(R.id.listView);
-        //listView.setOnItemClickListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -66,9 +60,7 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
             if (!haveInternetConntection) {
                 showAlertDialog(R.string.alert_dialog_no_internet);
             }
-            //adapter = new ArticleAdapter(this, db.getAllArticles(), false);
             adapter_proba = new RecyclerViewAdapter(this, db.getAllArticles(), this, false);
-            //listView.setAdapter(adapter);
             recyclerView.setAdapter(adapter_proba);
         }
 
@@ -79,9 +71,7 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
         if (response.isSuccessful()) {
             articleList = new ArrayList<>();
             articleList = response.body().getArticles();
-            //adapter = new ArticleAdapter(this, articleList, true);
             adapter_proba = new RecyclerViewAdapter(this, articleList, this, true);
-            //listView.setAdapter(adapter);
             recyclerView.setAdapter(adapter_proba);
 
             AsyncTask.execute(new Runnable() {
@@ -118,13 +108,6 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
         }
         showAlertDialog(R.string.alert_dialog_error);
     }
-
-    /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent i = new Intent(this, SingleNewsActivity.class);
-        i.putExtra(SingleNewsActivity.KEY_POSITION, position);
-        startActivity(i);
-    }*/
 
     private boolean needUpdate() {
         if ((System.currentTimeMillis() - db.getTimeStamp(1)) > FIVE_MINUTES) {
@@ -176,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
 
     public void showAlertDialog(int message) {
         MyDialogFragment dialogFragment = MyDialogFragment.newInstance(message);
-                dialogFragment.show(getFragmentManager() , "dialog");
+        dialogFragment.show(getFragmentManager(), "dialog");
     }
 
     @Override
