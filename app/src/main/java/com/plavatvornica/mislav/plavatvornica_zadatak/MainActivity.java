@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,12 +30,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity implements retrofit2.Callback<ResponseBody>, RecyclerViewAdapter.OnItemClickListener {
 
     private ArrayList<Article> articleList;
-    private RecyclerViewAdapter adapter_proba;
+    private RecyclerViewAdapter adapter;
     private RecyclerView recyclerView;
+    private static final String DIALOG_TAG = "dialog";
     private static final String BASE_URL = "https://newsapi.org/";
     DatabaseHandler db;
     ProgressDialog mProgressDialog;
-    AlertDialog dialog;
     private static final long FIVE_MINUTES = 1000 * 60 * 5; //ms
 
     @Override
@@ -55,13 +54,12 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
             db.deleteAllData();
             sendRequest();
             showProgressDialog();
-            //todo srediti no adapter attached; skipping layout
         } else {
             if (!haveInternetConntection) {
                 showAlertDialog(R.string.alert_dialog_no_internet);
             }
-            adapter_proba = new RecyclerViewAdapter(this, db.getAllArticles(), this, false);
-            recyclerView.setAdapter(adapter_proba);
+            adapter = new RecyclerViewAdapter(this, db.getAllArticles(), this, false);
+            recyclerView.setAdapter(adapter);
         }
 
     }
@@ -71,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
         if (response.isSuccessful()) {
             articleList = new ArrayList<>();
             articleList = response.body().getArticles();
-            adapter_proba = new RecyclerViewAdapter(this, articleList, this, true);
-            recyclerView.setAdapter(adapter_proba);
+            adapter = new RecyclerViewAdapter(this, articleList, this, true);
+            recyclerView.setAdapter(adapter);
 
             AsyncTask.execute(new Runnable() {
                 @Override
@@ -150,16 +148,11 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
                 mProgressDialog.dismiss();
             }
         }
-        if (dialog != null) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-        }
     }
 
     public void showAlertDialog(int message) {
         MyDialogFragment dialogFragment = MyDialogFragment.newInstance(message);
-        dialogFragment.show(getFragmentManager(), "dialog");
+        dialogFragment.show(getFragmentManager(), DIALOG_TAG);
     }
 
     @Override

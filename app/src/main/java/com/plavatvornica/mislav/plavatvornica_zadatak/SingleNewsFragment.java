@@ -43,7 +43,7 @@ public class SingleNewsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(activity != null){
+        if (activity != null) {
             activity.unregisterReceiver(myReceiver);
         }
     }
@@ -58,7 +58,6 @@ public class SingleNewsFragment extends Fragment {
     };
 
     private void setSingleView(int position) {
-        //TODO cursor window is full - moguci uzrok zato sto prevelik broj podataka u jednom trenutku uzima, probati smanjiti query na manje dijelove
         Article article = db.getArticle(position + 1);
         text_title = (TextView) view.findViewById(R.id.text_title);
         text_description = (TextView) view.findViewById(R.id.text_description);
