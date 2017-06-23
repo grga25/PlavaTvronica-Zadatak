@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PlavaTvornica - Zadatak</string>
+    <string name="alert_dialog_title">Upozorenje!</string>
+    <string name="alert_dialog_no_internet">Provjerite internet konekciju!</string>
+    <string name="alert_dialog_error">Ups, došlo je do pogreške</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="progress_dialog_loading">Loading...</string>
+</resources>
