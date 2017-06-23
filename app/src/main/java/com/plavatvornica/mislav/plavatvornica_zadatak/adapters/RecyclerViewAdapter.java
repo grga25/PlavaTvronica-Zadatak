@@ -1,6 +1,7 @@
 package com.plavatvornica.mislav.plavatvornica_zadatak.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if (article != null) {
             holder.bind(position, listener);
             TextView textView = holder.textTitle;
+            Typeface type_face = Typeface.createFromAsset(context.getAssets(), "fonts/Roboto-Regular.ttf");
+            textView.setTypeface(type_face);
             textView.setText(article.getTitle());
             if (downloadImages) {
                 Glide.with(context).load(article.getUrlToImage()).placeholder(R.mipmap.ic_launcher).fitCenter().error(R.mipmap.ic_launcher).into(holder.imageView);

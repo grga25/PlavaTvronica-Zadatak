@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
                     for (Article article : articleList) {
                         try {
                             db.addArticle(article,
-                                    Utils.getBytes(Glide.with(MainActivity.this).load(article.getUrlToImage()).asBitmap().into(400, 400).get()));
+                                    Utils.getBytes(Glide.with(MainActivity.this).load(article.getUrlToImage()).asBitmap().into(360, 200).get()));
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         } catch (ExecutionException e) {

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -60,10 +61,14 @@ public class SingleNewsFragment extends Fragment {
     private void setSingleView(int position) {
         Article article = db.getArticle(position + 1);
         text_title = (TextView) view.findViewById(R.id.text_title);
-        text_description = (TextView) view.findViewById(R.id.text_description);
-        image = (ImageView) view.findViewById(R.id.image_article);
+        Typeface title_face = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Medium.ttf");
+        text_title.setTypeface(title_face);
         text_title.setText(article.getTitle());
+        text_description = (TextView) view.findViewById(R.id.text_description);
+        Typeface description_face = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
+        text_description.setTypeface(description_face);
         text_description.setText(article.getDescription());
+        image = (ImageView) view.findViewById(R.id.image_article);
         image.setImageBitmap(Utils.getImage(article.getImageByte()));
     }
 
