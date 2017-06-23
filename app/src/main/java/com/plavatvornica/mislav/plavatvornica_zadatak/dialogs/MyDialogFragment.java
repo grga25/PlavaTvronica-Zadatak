@@ -38,5 +38,10 @@ public class MyDialogFragment extends DialogFragment {
                 }).create();
     }
 
+    public void onPause() {
+        super.onPause();
+        this.dismiss();
+    }
+
 
 }
