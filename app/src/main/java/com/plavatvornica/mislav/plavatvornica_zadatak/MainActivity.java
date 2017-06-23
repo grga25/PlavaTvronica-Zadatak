@@ -48,13 +48,18 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         db = new DatabaseHandler(this);
+
+        //check if user have internet connection
         boolean haveInternetConntection = Utils.checkInternetConnection(this);
 
+        //sending request
         if ((db.getArticlesCount() == 0 || needUpdate()) && haveInternetConntection) {
             db.deleteAllData();
             sendRequest();
             showProgressDialog();
-        } else {
+        }
+        //read data from database
+        else {
             if (!haveInternetConntection) {
                 showAlertDialog(R.string.alert_dialog_no_internet);
             }
@@ -72,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements retrofit2.Callbac
             adapter = new RecyclerViewAdapter(this, articleList, this, true);
             recyclerView.setAdapter(adapter);
 
+            //save all data to database
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
